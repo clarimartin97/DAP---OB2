@@ -2,6 +2,7 @@ customElements.define(
   "page-onboarding",
   class extends HTMLElement {
     connectedCallback() {
+      sesionActiva()      
       this.innerHTML = document.getElementById("page-onboarding.html").innerHTML;
     }
   }
@@ -27,6 +28,16 @@ customElements.define(
   }
 );
 
+customElements.define(
+  "skeleton-producto",
+  class extends HTMLElement {
+    connectedCallback() {
+      this.innerHTML = document.getElementById(
+        "skeleton-producto.html"
+      ).innerHTML;
+    }
+  }
+);
 customElements.define(
   "page-producto-ampliado",
   class extends HTMLElement {
