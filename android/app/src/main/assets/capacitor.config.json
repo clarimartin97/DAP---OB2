@@ -1,0 +1,6 @@
+{
+	"appId": "com.segundo.obligatorio",
+	"appName": "segundo-obligatorio",
+	"webDir": "www",
+	"bundledWebRuntime": true
+}

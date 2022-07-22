@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">segundo-obligatorio</string>
+    <string name="title_activity_main">segundo-obligatorio</string>
+    <string name="package_name">com.segundo.obligatorio</string>
+    <string name="custom_url_scheme">com.segundo.obligatorio</string>
+</resources>
