@@ -1,3 +1,4 @@
+
 const API_URL = "https://api.mercadolibre.com/";
 const SITES_URL = API_URL + "sites/MLU/";
 const ITEMS_URL = API_URL + "items/";
@@ -5,7 +6,11 @@ const USER_URL = "http://api.bitxia.tech/dapps/users/";
 
 const $nav = document.querySelector("ion-nav");
 const $menu = document.querySelector("ion-menu");
+const handlerOutput = document.querySelector('#handlerResult');
+const roleOutput = document.querySelector('#roleResult');
 let productos = null
+let producto = null
+let carrito = []
 
 
 ///FUNCIONES
@@ -41,7 +46,7 @@ function cargarListadoProductos(busqueda = "", filtros = null) {
   document.querySelector("page-listado #listado-productos").innerHTML = ""
 
   let endpoint = SITES_URL + `search?q=${busqueda}&official_store_id=456`
-  if(filtros != null) {
+  if (filtros != null) {
     endpoint += `&${filtros}`
   }
   console.log(endpoint)
@@ -69,7 +74,7 @@ async function mostrarProductos() {
         producto.sold_quantity = apiRes.sold_quantity
         producto.warranty = apiRes.warranty
 
-          html += /*html*/ `
+        html += /*html*/ `
           <ion-card button onclick="ampliarProducto(${i})">
             <img src="${producto.pictures[0].url}" />
             <ion-card-header>
@@ -90,7 +95,7 @@ async function mostrarProductos() {
 }
 
 function ampliarProducto(i) {
-  let producto = productos[i]
+  producto = productos[i]
   $nav.push("page-producto-ampliado", { producto })
 }
 
@@ -177,6 +182,7 @@ function cerrarSesion() {
   ///limpiar carrito
   document.querySelector("#menusin").close()
   nuevaNavegacion('page-onboarding')
+  carrito = []
 }
 
 
@@ -195,8 +201,78 @@ function sesionActiva() {
 
 ///FILTROS DE PRODUCTOS
 
-function filtroProductos(categoria, filtro){
+function filtroProductos(categoria, filtro) {
   let busqueda = document.querySelector("#buscador").value.toLowerCase()
   let filtros = `${categoria}=${filtro}`
   cargarListadoProductos(busqueda, filtros)
 }
+
+// CARRITO
+
+function agregarAlCarrito() {
+  console.log("hola")
+  let cantidad = document.querySelector("#cantidadSeleccionada").value;
+  let productoCarritoNuevo = new Producto(producto.id, producto.pictures[0].url, producto.title, producto.price, cantidad)
+  carrito.push(productoCarritoNuevo);
+  console.log(carrito)
+  presentAlert()
+}
+
+class Producto {
+  constructor(idP, fotoP, nombreP, precioP, cantidadP) {
+    this.id = idP;
+    this.foto = fotoP;
+    this.nombre = nombreP;
+    this.precio = precioP;
+    this.cantidad = cantidadP;
+  }
+}
+
+
+function presentAlert() {
+  const alert = document.createElement('ion-alert');
+  alert.header = 'Tu producto se ha agregado con éxito!';
+  alert.buttons = [
+    {
+      text: 'Seguir comprando',
+      role: 'Seguir comprando',
+      handler: () => {
+        navegar('page-listado')
+      }
+    },
+    {
+      text: 'Ir a Carrito',
+      role: 'Ir a Carrito',
+      handler: () => {
+        navegar('page-carrito')
+
+      }
+    }
+  ];
+
+  document.body.appendChild(alert);
+  alert.present();
+
+}
+
+function comprarProducto() {
+  navegar('page-tarjeta')
+}
+
+function pagoElegido() {
+console.log("hola")
+  let datosDeTarjeta = document.querySelector("#completarDatosTarjeta");
+  let escanearCodigo = document.querySelector("#escanearCodigo");
+  let selPago = document.querySelector("#selPago").value;
+
+  if (selPago === "debito" || selPago === "credito") {
+    datosDeTarjeta.style.display = "block"
+    escanearCodigo.style.display = "none"
+  }
+  else {
+
+    datosDeTarjeta.style.display = "none"
+    escanearCodigo.style.display = "block"
+  }
+}
+

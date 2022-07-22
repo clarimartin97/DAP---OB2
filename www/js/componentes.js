@@ -2,7 +2,7 @@ customElements.define(
   "page-onboarding",
   class extends HTMLElement {
     connectedCallback() {
-      sesionActiva()      
+      sesionActiva()
       this.innerHTML = document.getElementById("page-onboarding.html").innerHTML;
     }
   }
@@ -13,7 +13,20 @@ customElements.define(
   class extends HTMLElement {
     connectedCallback() {
       this.innerHTML = document.getElementById("page-login.html").innerHTML;
-      
+
+    }
+  }
+);
+
+customElements.define(
+  "page-tarjeta",
+  class extends HTMLElement {
+    connectedCallback() {
+      this.innerHTML = document.getElementById("page-tarjeta.html").innerHTML;
+      document.querySelector("#completarDatosTarjeta").style.display = "none"
+      document.querySelector("#escanearCodigo").style.display = "none"
+      document.querySelector("#selPago").addEventListener("ionChange", pagoElegido)
+
     }
   }
 );
@@ -64,13 +77,18 @@ customElements.define(
       <ion-card-p>Cantidad vendida: ${this.producto.sold_quantity}</ion-card-p>
       <ion-card-header>
       <ion-card-title> ${this.producto.warranty}</ion-card-title> 
-      
+      <ion-item>
+      <ion-label>Cantidad:</ion-label>
+      <ion-input id="cantidadSeleccionada" value="1" min="1" max="${this.producto.available_quantity}" type="number"></ion-input>
+    </ion-item>
+      <ion-button color="danger" onclick="agregarAlCarrito()">Agregar al carrito</ion-button>
+      <ion-button onclick="comprarProducto()" >Comprar ahora</ion-button>
       </ion-card-header>
     </ion-card-header>
   </ion-card>
 </ion-content>    
       `;
-    }  /* averiguar por que el available quantity y el sold quantity da numeros que no parecen ser los correctos!! */
+    }
   }
 );
 

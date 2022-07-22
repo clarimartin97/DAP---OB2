@@ -265,6 +265,53 @@
     </ion-content>
   </template>
 
+  <template id="page-tarjeta.html">
+    <ion-header>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-back-button></ion-back-button>
+        </ion-buttons>
+        <ion-buttons slot="end">
+          <ion-menu-button menu="menu-principal"></ion-menu-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <h1>Finalizar compra</h1>
+      <ion-item>
+        <ion-label>Elegir método de pago</ion-label>
+        <ion-select id="selPago" class="custom-options" >
+          <ion-select-option id="deb" value="debito">Tarjeta de débito</ion-select-option>
+          <ion-select-option id="cred" value="credito">Tarjeta de crédito</ion-select-option>
+          <ion-select-option id="merpag" value="mercadopago">Mercado pago</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <div id="completarDatosTarjeta">
+        <ion-item>
+          <ion-label>Nombre del titular</ion-label>
+          <ion-input placeholder="Nombre" type="text"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>Número de tarjeta</ion-label>
+          <ion-input placeholder="Número de tarjeta" type="text"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>Fecha de vencimiento</ion-label>
+          <ion-datetime presentation="month-year"></ion-datetime>
+        </ion-item>
+        <ion-item>
+          <ion-label>Códigoo de seguridad</ion-label>
+          <ion-input placeholder="Código de seguridad" type="text"></ion-input>
+        </ion-item>
+      </div>
+      <div id="escanearCodigo">
+        <h1>Escanea el código en tu App!</h1>
+        <ion-img src="./assets/img/codigoqr.png" start></ion-img>
+
+      </div>
+    </ion-content>
+  </template>
+
   <template id="skeleton-producto.html">
     <ion-card>
       <ion-skeleton-text animated style="height: 280px; margin: 0"></ion-skeleton-text>
