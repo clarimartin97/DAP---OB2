@@ -280,7 +280,7 @@
       <h1>Finalizar compra</h1>
       <ion-item>
         <ion-label>Elegir método de pago</ion-label>
-        <ion-select id="selPago" class="custom-options" >
+        <ion-select id="selPago" class="custom-options">
           <ion-select-option id="deb" value="debito">Tarjeta de débito</ion-select-option>
           <ion-select-option id="cred" value="credito">Tarjeta de crédito</ion-select-option>
           <ion-select-option id="merpag" value="mercadopago">Mercado pago</ion-select-option>
@@ -309,6 +309,7 @@
         <ion-img src="./assets/img/codigoqr.png" start></ion-img>
 
       </div>
+      <ion-button id="finalizarPago" onclick="finalizarPago()">Finalizar Compra</ion-button>
     </ion-content>
   </template>
 
@@ -327,6 +328,27 @@
       </ion-card-header>
     </ion-card>
   </template>
+
+  <template id="page-pago-finalizado.html">
+    <ion-header>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-back-button></ion-back-button>
+        </ion-buttons>
+        <ion-buttons slot="end">
+          <ion-menu-button menu="menu-principal"></ion-menu-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <ion-button onclick="nuevaNavegacion('page-listado')">Volver al listado</ion-button>
+      <ion-item>
+        <h1>Tu compra fue realizada con éxito</h1>
+      </ion-item>
+    </ion-content>
+  </template>
+
+
 
 
   <script src="capacitor.js"></script>

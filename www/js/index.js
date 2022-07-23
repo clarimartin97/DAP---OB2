@@ -11,6 +11,7 @@ const roleOutput = document.querySelector('#roleResult');
 let productos = null
 let producto = null
 let carrito = []
+let comprandoCarrito = false
 
 
 ///FUNCIONES
@@ -256,11 +257,13 @@ function presentAlert() {
 }
 
 function comprarProducto() {
+  comprandoCarrito = false
   navegar('page-tarjeta')
 }
 
 function pagoElegido() {
 console.log("hola")
+  let finalizar = document.querySelector("#finalizarPago");
   let datosDeTarjeta = document.querySelector("#completarDatosTarjeta");
   let escanearCodigo = document.querySelector("#escanearCodigo");
   let selPago = document.querySelector("#selPago").value;
@@ -268,11 +271,24 @@ console.log("hola")
   if (selPago === "debito" || selPago === "credito") {
     datosDeTarjeta.style.display = "block"
     escanearCodigo.style.display = "none"
+    finalizar.style.display = "block"
+    
   }
   else {
 
     datosDeTarjeta.style.display = "none"
     escanearCodigo.style.display = "block"
+    finalizar.style.display = "block"
   }
 }
 
+function finalizarPago() {
+  if(comprandoCarrito){
+    carrito = []
+  }
+  else {
+    producto = null
+  }
+  nuevaNavegacion('page-pago-finalizado')
+
+}

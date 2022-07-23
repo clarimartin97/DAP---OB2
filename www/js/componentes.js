@@ -25,6 +25,8 @@ customElements.define(
       this.innerHTML = document.getElementById("page-tarjeta.html").innerHTML;
       document.querySelector("#completarDatosTarjeta").style.display = "none"
       document.querySelector("#escanearCodigo").style.display = "none"
+      document.querySelector("#finalizarPago").style.display = "none"
+      
       document.querySelector("#selPago").addEventListener("ionChange", pagoElegido)
 
     }
@@ -37,6 +39,15 @@ customElements.define(
   class extends HTMLElement {
     connectedCallback() {
       this.innerHTML = document.getElementById("page-registro.html").innerHTML;
+    }
+  }
+);
+
+customElements.define(
+  "page-pago-finalizado",
+  class extends HTMLElement {
+    connectedCallback() {
+      this.innerHTML = document.getElementById("page-pago-finalizado.html").innerHTML;
     }
   }
 );
