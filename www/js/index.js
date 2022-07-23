@@ -262,7 +262,7 @@ function comprarProducto() {
 }
 
 function pagoElegido() {
-console.log("hola")
+  console.log("hola")
   let finalizar = document.querySelector("#finalizarPago");
   let datosDeTarjeta = document.querySelector("#completarDatosTarjeta");
   let escanearCodigo = document.querySelector("#escanearCodigo");
@@ -272,7 +272,7 @@ console.log("hola")
     datosDeTarjeta.style.display = "block"
     escanearCodigo.style.display = "none"
     finalizar.style.display = "block"
-    
+
   }
   else {
 
@@ -283,12 +283,38 @@ console.log("hola")
 }
 
 function finalizarPago() {
-  if(comprandoCarrito){
+  if (comprandoCarrito) {
     carrito = []
   }
   else {
     producto = null
   }
   nuevaNavegacion('page-pago-finalizado')
+
+}
+
+//CARRITO
+
+function cargarCarrito() {
+  console.log(carrito)
+  let divCarrito= document.querySelector("#listado-carrito")
+  let html = ""
+  for(producto of carrito){
+  console.log(producto)
+    html += /*html*/ `
+            <ion-card button>
+              <img src="${producto.foto}" />
+              <ion-card-header>
+              <ion-button icon="close" onclick="eliminarItem(${producto.id})"></ion-button>
+                <ion-card-subtitle> $  ${producto.precio}</ion-card-subtitle>
+                <ion-card-subtitle>  ${producto.cantidad}</ion-card-subtitle>
+                <ion-card-title>${producto.nombre}</ion-card-title>
+              </ion-card-header>
+            </ion-card>`
+  }
+  divCarrito.innerHTML = html
+}
+
+function eliminarItem(id){
 
 }

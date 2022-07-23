@@ -118,6 +118,7 @@ customElements.define(
   class extends HTMLElement {
     connectedCallback() {
       this.innerHTML = document.getElementById("page-carrito.html").innerHTML;
+      cargarCarrito()
     }
   }
 );
