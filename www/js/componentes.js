@@ -85,16 +85,26 @@ customElements.define(
   <ion-card>
     <img src="${this.producto.pictures[0].url}" />
     <ion-card-header>
-      <ion-card-title> $ ${this.producto.price}</ion-card-title>
+    <ion-row>
+    <ion-col size="6">
       <ion-card-title>${this.producto.title}</ion-card-title>
-      <ion-card-p>Disponibles a la venta: ${this.producto.available_quantity}</ion-card-p>
-      <ion-card-p>Cantidad vendida: ${this.producto.sold_quantity}</ion-card-p>
+      </ion-col>
+      <ion-col size="6">
+      <ion-card-title> $ ${this.producto.price}</ion-card-title>
+      </ion-col>
+      <ion-col size="6">
+      <ion-card-title>Disponibles a la venta: ${this.producto.available_quantity}</ion-card-title>
+      </ion-col>
+      <ion-col size="6">
+      <ion-card-title>Cantidad vendida: ${this.producto.sold_quantity}</ion-card-title>
+      </ion-col>
       <ion-card-header>
       <ion-card-title> ${this.producto.warranty}</ion-card-title> 
       <ion-item>
       <ion-label>Cantidad:</ion-label>
       <ion-input id="cantidadSeleccionada" value="1" min="1" max="${this.producto.available_quantity}" type="number"></ion-input>
     </ion-item>
+    </ion-row>
       <ion-button color="danger" onclick="agregarAlCarrito()">Agregar al carrito</ion-button>
       <ion-button onclick="comprarProducto()" >Comprar ahora</ion-button>
       </ion-card-header>

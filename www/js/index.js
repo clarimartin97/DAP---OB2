@@ -81,7 +81,7 @@ async function mostrarProductos() {
           <ion-card button onclick="ampliarProducto(${i})">
             <img src="${producto.pictures[0].url}" />
             <ion-card-header>
-              <ion-card-title> $  ${producto.price}</ion-card-title>
+              <ion-card-title color="danger"> $  ${producto.price}</ion-card-title>
               
               <ion-card-title>${producto.title}</ion-card-title>
             </ion-card-header>
@@ -114,7 +114,6 @@ function ampliarProducto(i) {
 
 ///REGISTRO
 function validarMailRegistro() {
-  console.log("holaa!!")
   mailValidado = false;
   document.querySelector("#mensajeRegistro").textContent = "";
   let email = document.querySelector("#ingresaEmail").value;
@@ -150,7 +149,6 @@ function validarMailRegistro() {
     document.querySelector("#mensajeRegistro").textContent = "Su mail es correcto.";
     mailValidado = true;
   }
-  console.log(mailValidado)
 }
 
 function registrarUsuario() {
@@ -419,7 +417,6 @@ function validarNumeroTarjeta() {
   numeroTarjetaValidado=false;
   document.querySelector("#mensajePago").textContent = "";
   let numeroTarjeta = document.querySelector("#numeroTarjeta").value;
-  console.log(numeroTarjeta.length)
 
   if (numeroTarjeta.length === 0) {
     document.querySelector("#mensajePago").textContent = "Debes escribir tu número de tarjeta";
@@ -438,7 +435,6 @@ function validarCodigoTarjeta() {
   codigoTarjetaValidado=false;
   document.querySelector("#mensajePago").textContent = "";
   let codigoTarjeta = document.querySelector("#codigoTarjeta").value;
-  console.log(codigoTarjeta.length)
 
   if (codigoTarjeta.length === 0) {
     document.querySelector("#mensajePago").textContent = "Debes escribir el código de tu de tarjeta";
@@ -479,18 +475,18 @@ function cargarCarrito() {
             <ion-card button>
               <img src="${producto.foto}" />
               <ion-card-header>
-              <ion-button  onclick="eliminarItem(${producto.index})">X</ion-button>
-                <ion-card-subtitle> $  ${producto.precio}</ion-card-subtitle>
-                <ion-card-subtitle>  ${producto.cantidad}</ion-card-subtitle>
+              <ion-button color="danger" onclick="eliminarItem(${producto.index})"><ion-icon name="close-circle-outline"></ion-icon></ion-button>
+                <ion-card-title> $  ${producto.precio}</ion-card-title>
+                <ion-card-title>  ${producto.cantidad}</ion-card-title>
                 <ion-card-title>${producto.nombre}</ion-card-title>
               </ion-card-header>
             </ion-card>`
   }
   if (html === "") {
     html = `<ion-card button>
-    PONER IMAGEN DE CARRITOOOO
     <ion-card-header>
-      <ion-card-title>Tu carrito se encuentra vacío</ion-card-title>
+    <img src="./assets/img/carrito-vacio.png"/>
+      <ion-card-title>Tu carrito se encuentra vacío!</ion-card-title>
     </ion-card-header>
   </ion-card>`
   }
@@ -502,7 +498,6 @@ function cargarCarrito() {
 }
 
 function eliminarItem(index) {
-  console.log(index)
   carrito.splice(index, 1)
   localStorage.setItem('carritoUsuario', JSON.stringify(carrito));
   cargarCarrito()
