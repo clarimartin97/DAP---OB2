@@ -13,7 +13,9 @@ let producto = null
 let carrito = []
 let comprandoCarrito = false
 let mailValidado = false
-
+let titularTarjetaValidado = false
+let numeroTarjetaValidado = false
+let codigoTarjetaValidado = false
 
 ///FUNCIONES
 
@@ -87,7 +89,7 @@ async function mostrarProductos() {
       `;
       })
   }
-  
+
   const loaderHtml = document.querySelector("#loader")
   const buscadorHtml = document.querySelector("#buscador")
   const listadoHtml = document.querySelector("page-listado #listado-productos")
@@ -99,7 +101,7 @@ async function mostrarProductos() {
   if (listadoHtml != null) {
     listadoHtml.innerHTML = html
   }
-  
+
   if (buscadorHtml != null) {
     buscadorHtml.disabled = false;
   }
@@ -111,42 +113,42 @@ function ampliarProducto(i) {
 }
 
 ///REGISTRO
-function validarMail() {
+function validarMailRegistro() {
   console.log("holaa!!")
   mailValidado = false;
-  document.querySelector("#mensaje").textContent = "";
+  document.querySelector("#mensajeRegistro").textContent = "";
   let email = document.querySelector("#ingresaEmail").value;
 
   let posicionArroba = email.indexOf("@");
   let posicionPunto = email.indexOf(".", posicionArroba);
 
   if (email.length === 0) {
-      document.querySelector("#mensaje").textContent = "Debes escribir tu mail";
+    document.querySelector("#mensajeRegistro").textContent = "Debes escribir tu mail";
   }
 
   else if (posicionArroba === -1) {
-      document.querySelector("#mensaje").textContent = "su mail debe contener @";
+    document.querySelector("#mensajeRegistro").textContent = "su mail debe contener @";
   }
 
   else if (posicionArroba === 0) {
-      document.querySelector("#mensaje").textContent = "su mail debe contener texto antes del @";
+    document.querySelector("#mensajeRegistro").textContent = "su mail debe contener texto antes del @";
   }
 
   else if (email.charAt(posicionArroba + 1) === "" || email.charAt(posicionArroba + 1) === " ") {
-      document.querySelector("#mensaje").textContent = "Debe tener texto despues del @";
+    document.querySelector("#mensajeRegistro").textContent = "Debe tener texto despues del @";
   }
 
   else if (posicionPunto === -1) {
-      document.querySelector("#mensaje").textContent = "su mail debe contener . despues del @";
+    document.querySelector("#mensajeRegistro").textContent = "su mail debe contener . despues del @";
   }
 
   else if (email.charAt(posicionPunto + 1) === "" || email.charAt(posicionPunto + 1) === " ") {
-      document.querySelector("#mensaje").textContent = "su mail debe contener texto despues del .";
+    document.querySelector("#mensajeRegistro").textContent = "su mail debe contener texto despues del .";
   }
 
   else {
-      document.querySelector("#mensaje").textContent = "Su mail es correcto.";
-      mailValidado = true;
+    document.querySelector("#mensajeRegistro").textContent = "Su mail es correcto.";
+    mailValidado = true;
   }
   console.log(mailValidado)
 }
@@ -154,13 +156,13 @@ function validarMail() {
 function registrarUsuario() {
   let inputRegistroUsuario = document.querySelector("#ingresaEmail").value;
   let inputRegistroContraseña = document.querySelector("#crearContraseña").value;
- 
+
   if (inputRegistroContraseña === null || inputRegistroContraseña.length < 4) {
-      alert("Tu contraseña debe contener al menos 3 letras");
-      return;
-  
-  } 
-  if(!mailValidado){
+    alert("Tu contraseña debe contener al menos 3 letras");
+    return;
+
+  }
+  if (!mailValidado) {
     alert("Ingrese un e-mail correcto");
     return
   }
@@ -193,9 +195,58 @@ function registrarUsuario() {
 
 ///INICIO DE SESIÓN
 
+function validarMailLogin() {
+  mailValidado = false;
+  document.querySelector("#mensajeLogin").textContent = "";
+  let email = document.querySelector("#ingresoEmail").value;
+
+  let posicionArroba = email.indexOf("@");
+  let posicionPunto = email.indexOf(".", posicionArroba);
+
+  if (email.length === 0) {
+    document.querySelector("#mensajeLogin").textContent = "Debes escribir tu mail";
+  }
+
+  else if (posicionArroba === -1) {
+    document.querySelector("#mensajeLogin").textContent = "su mail debe contener @";
+  }
+
+  else if (posicionArroba === 0) {
+    document.querySelector("#mensajeLogin").textContent = "su mail debe contener texto antes del @";
+  }
+
+  else if (email.charAt(posicionArroba + 1) === "" || email.charAt(posicionArroba + 1) === " ") {
+    document.querySelector("#mensajeLogin").textContent = "Debe tener texto despues del @";
+  }
+
+  else if (posicionPunto === -1) {
+    document.querySelector("#mensajeLogin").textContent = "su mail debe contener . despues del @";
+  }
+
+  else if (email.charAt(posicionPunto + 1) === "" || email.charAt(posicionPunto + 1) === " ") {
+    document.querySelector("#mensajeLogin").textContent = "su mail debe contener texto despues del .";
+  }
+
+  else {
+    document.querySelector("#mensajeLogin").textContent = "Su mail es correcto.";
+    mailValidado = true;
+  }
+}
+
 function iniciarSesion() {
   let inputIngresoUsuario = document.querySelector("#ingresoEmail").value;
   let inputIngresoContraseña = document.querySelector("#ingresoContraseña").value;
+
+
+  if (inputIngresoUsuario === null || inputIngresoContraseña.length < 4) {
+    alert("Tu contraseña debe contener al menos 3 letras");
+    return;
+
+  }
+  if (!mailValidado) {
+    alert("Ingrese un e-mail correcto");
+    return
+  }
   fetch(USER_URL, {
     method: "POST",
     headers: {
@@ -242,11 +293,11 @@ function sesionActiva() {
 
   if (usuarioEmail !== null && usuarioContraseña !== null && usuarioId !== null) {
     let carritoLS = localStorage.getItem("carritoUsuario");
-    if(carritoLS != null) {
+    if (carritoLS != null) {
       carrito = JSON.parse(carritoLS);
     }
     nuevaNavegacion('page-listado')
-    
+
   }
 }
 
@@ -259,7 +310,14 @@ function filtroProductos(categoria, filtro) {
   cargarListadoProductos(busqueda, filtros)
 }
 
-// CARRITO
+function validarCantidadProducto() {
+  let inputHtml = document.querySelector("#cantidadSeleccionada")
+  let cantidad = inputHtml.value;
+  if (cantidad > producto.available_quantity) {
+    inputHtml.value = producto.available_quantity
+  }
+}
+// PRODUCTO
 
 function agregarAlCarrito() {
   let cantidad = document.querySelector("#cantidadSeleccionada").value;
@@ -327,16 +385,80 @@ function pagoElegido() {
     escanearCodigo.style.display = "none"
     finalizar.style.display = "block"
 
+    document.querySelector("#titularTarjeta").addEventListener("ionBlur", validarTitularTarjeta)
+    document.querySelector("#numeroTarjeta").addEventListener("ionBlur", validarNumeroTarjeta)
+    document.querySelector("#codigoTarjeta").addEventListener("ionBlur", validarCodigoTarjeta)
+
   }
   else {
-
     datosDeTarjeta.style.display = "none"
     escanearCodigo.style.display = "block"
     finalizar.style.display = "block"
   }
 }
 
+function validarTitularTarjeta() {
+  document.querySelector("#mensajePago").textContent = "";
+  titularTarjetaValidado = false;
+  let titularTarjeta = document.querySelector("#titularTarjeta").value;
+
+  if (titularTarjeta.length === 0) {
+    document.querySelector("#mensajePago").textContent = "Debes escribir tu nombre y apeliido";
+  }
+
+  else if (titularTarjeta.split(" ").length <= 1) {
+    document.querySelector("#mensajePago").textContent = "Debes escribir tu apellido";
+  }
+
+  else {
+    titularTarjetaValidado = true;
+  }
+
+}
+function validarNumeroTarjeta() {
+  numeroTarjetaValidado=false;
+  document.querySelector("#mensajePago").textContent = "";
+  let numeroTarjeta = document.querySelector("#numeroTarjeta").value;
+  console.log(numeroTarjeta.length)
+
+  if (numeroTarjeta.length === 0) {
+    document.querySelector("#mensajePago").textContent = "Debes escribir tu número de tarjeta";
+  }
+  else if (numeroTarjeta.length != 16) {
+    document.querySelector("#mensajePago").textContent = "La tarjeta debe ser de 16 dígitos";
+  }
+
+  else {
+    numeroTarjetaValidado = true;
+  }
+}
+
+function validarCodigoTarjeta() {
+  document.querySelector("#mensajePago").textContent = "";
+  codigoTarjetaValidado=false;
+  document.querySelector("#mensajePago").textContent = "";
+  let codigoTarjeta = document.querySelector("#codigoTarjeta").value;
+  console.log(codigoTarjeta.length)
+
+  if (codigoTarjeta.length === 0) {
+    document.querySelector("#mensajePago").textContent = "Debes escribir el código de tu de tarjeta";
+  }
+  else if (codigoTarjeta.length != 3) {
+    document.querySelector("#mensajePago").textContent = "El código debe ser de 3 dígitos";
+  }
+
+  else {
+    codigoTarjetaValidado = true;
+  }
+}
+
 function finalizarPago() {
+  
+
+  if(!titularTarjetaValidado || !numeroTarjetaValidado || !codigoTarjetaValidado){
+    alert("Faltan datos para poder realizar la compra")
+    return
+  }
   if (comprandoCarrito) {
     carrito = []
   }
@@ -350,9 +472,9 @@ function finalizarPago() {
 //CARRITO
 
 function cargarCarrito() {
-  let divCarrito= document.querySelector("#listado-carrito")
+  let divCarrito = document.querySelector("#listado-carrito")
   let html = ""
-  for(producto of carrito){
+  for (producto of carrito) {
     html += /*html*/ `
             <ion-card button>
               <img src="${producto.foto}" />
@@ -364,7 +486,7 @@ function cargarCarrito() {
               </ion-card-header>
             </ion-card>`
   }
-  if(html === ""){
+  if (html === "") {
     html = `<ion-card button>
     PONER IMAGEN DE CARRITOOOO
     <ion-card-header>
@@ -372,17 +494,27 @@ function cargarCarrito() {
     </ion-card-header>
   </ion-card>`
   }
-  else{
+  else {
     html +=
-    `<ion-button onclick="comprarCarrito()" > Comprar </ion-button>`
+      `<ion-button onclick="comprarCarrito()" > Comprar </ion-button>`
   }
   divCarrito.innerHTML = html
 }
 
-function eliminarItem(index){
+function eliminarItem(index) {
   console.log(index)
   carrito.splice(index, 1)
   localStorage.setItem('carritoUsuario', JSON.stringify(carrito));
   cargarCarrito()
 
+}
+
+function cargarUsuario(){ 
+  let correo = document.querySelector("#correoDatosUsuario")
+  let idDatosUsuario = document.querySelector("#idDatosUsuario")
+  let contraseña = document.querySelector("#contraseñaDatosUsuario")
+  
+  correo.innerHTML += localStorage.getItem("emailUsuario")
+  idDatosUsuario.innerHTML += localStorage.getItem("idUsuario")
+  contraseña.innerHTML += localStorage.getItem("contraseñaUsuario")
 }

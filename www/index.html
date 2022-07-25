@@ -154,6 +154,9 @@
               <ion-label>Contraseña</ion-label>
               <ion-input id="ingresoContraseña" placeholder="Contraseña" type="password"></ion-input>
             </ion-item>
+            <ion-item>
+              <p id="mensajeLogin"></p>
+            </ion-item>
             <ion-button expand="block" color="primary" onclick="iniciarSesion()">Iniciar Sesión</ion-button>
           </ion-col>
         </ion-row>
@@ -185,7 +188,7 @@
               <ion-input id="crearContraseña" placeholder="creaContraseña" type="password"></ion-input>
             </ion-item>
             <ion-item>
-              <p id="mensaje"></p>
+              <p id="mensajeRegistro"></p>
             </ion-item>
             <ion-button expand="block" color="danger" onclick="registrarUsuario()">Registrate</ion-button>
           </ion-col>
@@ -210,39 +213,15 @@
       <ion-img src="./assets/img/user.png" start></ion-img>
       <ion-title>Datos personales</ion-title>
       <ion-item>
-        <ion-label>Nombre</ion-label>
-        <ion-input placeholder="Nombre" type="text"></ion-input>
+        <ion-label id="correoDatosUsuario">Correo electrónico: </ion-label>
       </ion-item>
       <ion-item>
-        <ion-label>Correo electrónico</ion-label>
-        <ion-input placeholder="Correo electrónico" type="text"></ion-input>
-      </ion-item>
-
-
-      <ion-item>
-        <ion-label>Celular</ion-label>
-        <ion-input placeholder="Celular" type="number"></ion-input>
+        <ion-label id="idDatosUsuario">Id Usuario: </ion-label>
       </ion-item>
 
       <ion-item>
-        <ion-label>Contraseña</ion-label>
-        <ion-input placeholder="Contraseña" type="password"></ion-input>
+        <ion-label  id="contraseñaDatosUsuario">Contraseña: </ion-label>
       </ion-item>
-
-      <ion-item>
-        <ion-label position="stacked">Dirección de envío</ion-label>
-        <ion-input placeholder="Barrio"></ion-input>
-        <ion-input placeholder="Calle"></ion-input>
-        <ion-input placeholder="Número de puerta"></ion-input>
-        <ion-input placeholder="Apartamento"></ion-input>
-        <ion-input placeholder="País"></ion-input>
-      </ion-item>
-
-
-
-      <ion-button onclick="navegar('page-carrito')">Ir a Carrito</ion-button>
-
-      <ion-button expand="block" onclick="resetearNavegacion()">Resetear navegacion</ion-button>
     </ion-content>
   </template>
 
@@ -293,21 +272,24 @@
       <div id="completarDatosTarjeta">
         <ion-item>
           <ion-label>Nombre del titular</ion-label>
-          <ion-input placeholder="Nombre" type="text"></ion-input>
+          <ion-input id="titularTarjeta" placeholder="Nombre" type="text"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label>Número de tarjeta</ion-label>
-          <ion-input placeholder="Número de tarjeta" type="text"></ion-input>
+          <ion-input id="numeroTarjeta" placeholder="Número de tarjeta" type="number"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label>Fecha de vencimiento</ion-label>
           <ion-datetime presentation="month-year"></ion-datetime>
         </ion-item>
         <ion-item>
-          <ion-label>Códigoo de seguridad</ion-label>
-          <ion-input placeholder="Código de seguridad" type="text"></ion-input>
+          <ion-label>Código de seguridad</ion-label>
+          <ion-input id="codigoTarjeta" placeholder="Código de seguridad" type="number"></ion-input>
         </ion-item>
       </div>
+      <ion-item>
+        <p id="mensajePago"></p>
+      </ion-item>
       <div id="escanearCodigo">
         <h1>Escanea el código en tu App!</h1>
         <ion-img src="./assets/img/codigoqr.png" start></ion-img>

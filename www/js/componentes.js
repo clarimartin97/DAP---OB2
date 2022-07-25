@@ -13,6 +13,8 @@ customElements.define(
   class extends HTMLElement {
     connectedCallback() {
       this.innerHTML = document.getElementById("page-login.html").innerHTML;
+      document.querySelector("#ingresoEmail").addEventListener("ionBlur", validarMailLogin)
+
 
     }
   }
@@ -39,7 +41,7 @@ customElements.define(
   class extends HTMLElement {
     connectedCallback() {
       this.innerHTML = document.getElementById("page-registro.html").innerHTML;
-      document.querySelector("#ingresaEmail").addEventListener("ionBlur", validarMail)
+      document.querySelector("#ingresaEmail").addEventListener("ionBlur", validarMailRegistro)
     }
   }
 );
@@ -100,6 +102,9 @@ customElements.define(
   </ion-card>
 </ion-content>    
       `;
+
+      document.querySelector("#cantidadSeleccionada").addEventListener("ionBlur", validarCantidadProducto)
+      
     }
   }
 );
@@ -110,6 +115,7 @@ customElements.define(
   class extends HTMLElement {
     connectedCallback() {
       this.innerHTML = document.getElementById("page-usuario.html").innerHTML;
+      cargarUsuario()
     }
   }
 );
