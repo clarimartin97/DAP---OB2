@@ -4,6 +4,20 @@ ion-card img {
 ion-searchbar{
   margin-top: 10px;
 }
+h1{
+  text-align: center;
+  place-items: center;
+  margin: 30px;
+  font-size: 2em;
+
+}
+
+#filtradoId{
+  font-size: 2em;
+  font-weight: bolder;
+  margin-left: 10px;
+  margin-bottom: 20px;
+}
 
 .sc-ion-buttons-ios-h {
   margin-top: 10px;}

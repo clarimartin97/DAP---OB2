@@ -39,6 +39,7 @@ customElements.define(
   class extends HTMLElement {
     connectedCallback() {
       this.innerHTML = document.getElementById("page-registro.html").innerHTML;
+      document.querySelector("#ingresaEmail").addEventListener("ionBlur", validarMail)
     }
   }
 );
@@ -128,7 +129,6 @@ customElements.define(
   class extends HTMLElement {
     connectedCallback() {
       this.innerHTML = document.getElementById("page-listado.html").innerHTML;
-
 
       const buscador = document.querySelector("#buscador");
 
