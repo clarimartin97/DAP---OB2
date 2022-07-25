@@ -1,30 +1,77 @@
 ion-card img {
   width: 100%;
 }
-ion-searchbar{
+
+ion-searchbar {
   margin-top: 10px;
 }
-h1{
+
+.productoAmpliado {
+  font-size: 20px!important;
+}
+
+#cantidadSeleccionada {
+  background-color: #eb445a;
+  width: 10%;
+  color: white;
+  font-weight: bolder;
+  float: right;
+}
+#eliminarItem{
+  float: right;
+}
+#volverAlListado{
+  margin: 10px;
+}
+#correoDatosUsuario, #contraseñaDatosUsuario{
+  font-weight: bolder;
+  color: #eb445a;
+}
+
+#idDatosUsuario{
+  font-weight: bolder;
+  color:#3880ff;
+}
+
+.comprarCarrito{
+  margin: 10px;
+  display: flex;
+}
+.productoCarritoAmpliado{
+  font-size: 20px;
+  padding: 10px;
+}
+
+#eliminarItem{
+display: flex;
+align-items: right;
+}
+
+
+h1 {
   text-align: center;
   place-items: center;
   margin: 30px;
   font-size: 2em;
-
 }
 
-#filtradoId{
+#filtradoId {
   font-size: 2em;
   font-weight: bolder;
   margin-left: 10px;
   margin-bottom: 20px;
 }
 
-.escudo{
+.escudo {
   margin: 20px;
   padding: 10px;
 }
 
-ion-text{
+#precioProductoAmpliado {
+  float: right;
+}
+
+ion-text {
   font-weight: bolder;
   font-size: 1.1em;
   font-variant: all-small-caps;
@@ -32,21 +79,23 @@ ion-text{
 }
 
 .sc-ion-buttons-ios-h {
-  margin-top: 10px;}
+  margin-top: 10px;
+}
 
-  :root {
-    --ion-color-favorite: #666666;
-    --ion-color-favorite-rgb: 105, 187, 123;
-    --ion-color-favorite-contrast: #ffffff;
-    --ion-color-favorite-contrast-rgb: 255, 255, 255;
-    --ion-color-favorite-shade: #5ca56c;
-    --ion-color-favorite-tint: #78c288;
-  }
+:root {
+  --ion-color-favorite: #666666;
+  --ion-color-favorite-rgb: 105, 187, 123;
+  --ion-color-favorite-contrast: #ffffff;
+  --ion-color-favorite-contrast-rgb: 255, 255, 255;
+  --ion-color-favorite-shade: #5ca56c;
+  --ion-color-favorite-tint: #78c288;
+}
 
-  .ion-color-favorite {
-    --ion-color-base: var(--ion-color-favorite);
-    --ion-color-base-rgb: var(--ion-color-favorite-rgb);
-    --ion-color-contrast: var(--ion-color-favorite-contrast);
-    --ion-color-contrast-rgb: var(--ion-color-favorite-contrast-rgb);
-    --ion-color-shade: var(--ion-color-favorite-shade);
-    --ion-color-tint: var(--ion-color-favorite-tint);}
+.ion-color-favorite {
+  --ion-color-base: var(--ion-color-favorite);
+  --ion-color-base-rgb: var(--ion-color-favorite-rgb);
+  --ion-color-contrast: var(--ion-color-favorite-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-favorite-contrast-rgb);
+  --ion-color-shade: var(--ion-color-favorite-shade);
+  --ion-color-tint: var(--ion-color-favorite-tint);
+}

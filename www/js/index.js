@@ -16,10 +16,11 @@ let mailValidado = false
 let titularTarjetaValidado = false
 let numeroTarjetaValidado = false
 let codigoTarjetaValidado = false
+let pagoMercadoPago = false
 
 ///FUNCIONES
 
-
+//---Navegación---//
 function navegar(page) {
   $nav.push(page);
 }
@@ -35,84 +36,12 @@ function nuevaNavegacion(page) {
 function navegarMenu(page) {
   nuevaNavegacion(page);
   cerrarMenu();
-
 }
-
 function cerrarMenu() {
   $menu.close();
 }
 
-function handleInput(event) {
-  cargarListadoProductos(event.target.value.toLowerCase())
-}
-///PRODUCTOS
-function cargarListadoProductos(busqueda = "", filtros = null) {
-  document.querySelector("#buscador").disabled = true;
-  document.querySelector("page-listado #listado-productos").innerHTML = ""
-
-  let endpoint = SITES_URL + `search?q=${busqueda}&official_store_id=456`
-  if (filtros != null) {
-    endpoint += `&${filtros}`
-  }
-  document.querySelector("#loader").style.display = "block";
-  fetch(endpoint)
-    .then((res) => res.json())
-    .then((apiRes) => {
-      productos = apiRes.results;
-      mostrarProductos();
-    })
-    .catch(console.error);
-
-}
-
-async function mostrarProductos() {
-  let html = ""
-  for (let i = 0; i < productos.length; i++) {
-    let producto = productos[i]
-    await fetch(ITEMS_URL + producto.id)
-      .then((res) => res.json())
-      .then((apiRes) => {
-        producto.pictures = apiRes.pictures
-        producto.available_quantity = apiRes.available_quantity
-        producto.sold_quantity = apiRes.sold_quantity
-        producto.warranty = apiRes.warranty
-
-        html += /*html*/ `
-          <ion-card button onclick="ampliarProducto(${i})">
-            <img src="${producto.pictures[0].url}" />
-            <ion-card-header>
-              <ion-card-title color="danger"> $  ${producto.price}</ion-card-title>
-              
-              <ion-card-title>${producto.title}</ion-card-title>
-            </ion-card-header>
-          </ion-card>
-      `;
-      })
-  }
-
-  const loaderHtml = document.querySelector("#loader")
-  const buscadorHtml = document.querySelector("#buscador")
-  const listadoHtml = document.querySelector("page-listado #listado-productos")
-
-  if (loaderHtml != null) {
-    loaderHtml.style.display = "none";
-  }
-
-  if (listadoHtml != null) {
-    listadoHtml.innerHTML = html
-  }
-
-  if (buscadorHtml != null) {
-    buscadorHtml.disabled = false;
-  }
-}
-
-function ampliarProducto(i) {
-  producto = productos[i]
-  $nav.push("page-producto-ampliado", { producto })
-}
-
-///REGISTRO
+//---Registro---//
 function validarMailRegistro() {
   mailValidado = false;
   document.querySelector("#mensajeRegistro").textContent = "";
@@ -189,9 +118,7 @@ function registrarUsuario() {
 
     })
 }
-
-
-///INICIO DE SESIÓN
+//---Login---//
 
 function validarMailLogin() {
   mailValidado = false;
@@ -270,19 +197,7 @@ function iniciarSesion() {
     })
 }
 
-
-/// CERRAR SESIÓN
-
-function cerrarSesion() {
-  localStorage.clear()
-  ///limpiar carrito
-  document.querySelector("#menusin").close()
-  nuevaNavegacion('page-onboarding')
-  carrito = []
-}
-
-
-//// MANTENER INICIADA UNA SESION
+//---Mantener sesión Iniciada---//
 
 function sesionActiva() {
   let usuarioEmail = localStorage.getItem("emailUsuario");
@@ -299,14 +214,98 @@ function sesionActiva() {
   }
 }
 
+//---Cerrar sesión---//
 
-///FILTROS DE PRODUCTOS
+function cerrarSesion() {
+  localStorage.clear()
+  ///limpiar carrito
+  document.querySelector("#menusin").close()
+  nuevaNavegacion('page-onboarding')
+  carrito = []
+}
+
+//---Productos---//
+
+
+function handleInput(event) {
+  cargarListadoProductos(event.target.value.toLowerCase())
+}
+
+function cargarListadoProductos(busqueda = "", filtros = null) {
+  document.querySelector("#buscador").disabled = true;
+  document.querySelector("page-listado #listado-productos").innerHTML = ""
+
+  let endpoint = SITES_URL + `search?q=${busqueda}&official_store_id=456`
+  if (filtros != null) {
+    endpoint += `&${filtros}`
+  }
+  document.querySelector("#loader").style.display = "block";
+  fetch(endpoint)
+    .then((res) => res.json())
+    .then((apiRes) => {
+      productos = apiRes.results;
+      mostrarProductos();
+    })
+    .catch(console.error);
+
+}
+
+async function mostrarProductos() {
+  let html = ""
+  for (let i = 0; i < productos.length; i++) {
+    let producto = productos[i]
+    await fetch(ITEMS_URL + producto.id)
+      .then((res) => res.json())
+      .then((apiRes) => {
+        producto.pictures = apiRes.pictures
+        producto.available_quantity = apiRes.available_quantity
+        producto.sold_quantity = apiRes.sold_quantity
+        producto.warranty = apiRes.warranty
+
+        html += /*html*/ `
+          <ion-card button onclick="ampliarProducto(${i})">
+            <img src="${producto.pictures[0].url}" />
+            <ion-card-header>
+              <ion-card-title color="danger"> $  ${producto.price}</ion-card-title>
+              
+              <ion-card-title>${producto.title}</ion-card-title>
+            </ion-card-header>
+          </ion-card>
+      `;
+      })
+  }
+
+  const loaderHtml = document.querySelector("#loader")
+  const buscadorHtml = document.querySelector("#buscador")
+  const listadoHtml = document.querySelector("page-listado #listado-productos")
+
+  if (loaderHtml != null) {
+    loaderHtml.style.display = "none";
+  }
+
+  if (listadoHtml != null) {
+    listadoHtml.innerHTML = html
+  }
+
+  if (buscadorHtml != null) {
+    buscadorHtml.disabled = false;
+  }
+}
+
+function ampliarProducto(i) {
+  producto = productos[i]
+  $nav.push("page-producto-ampliado", { producto })
+}
+
+//---Filtro de productos---//
 
 function filtroProductos(categoria, filtro) {
   let busqueda = document.querySelector("#buscador").value.toLowerCase()
   let filtros = `${categoria}=${filtro}`
   cargarListadoProductos(busqueda, filtros)
 }
+
+//---Producto Ampliado---//
 
 function validarCantidadProducto() {
   let inputHtml = document.querySelector("#cantidadSeleccionada")
@@ -315,8 +314,6 @@ function validarCantidadProducto() {
     inputHtml.value = producto.available_quantity
   }
 }
-// PRODUCTO
-
 function agregarAlCarrito() {
   let cantidad = document.querySelector("#cantidadSeleccionada").value;
   let productoCarritoNuevo = new Producto(carrito.length, producto.pictures[0].url, producto.title, producto.price, cantidad)
@@ -324,17 +321,6 @@ function agregarAlCarrito() {
   localStorage.setItem('carritoUsuario', JSON.stringify(carrito));
   presentAlert()
 }
-
-class Producto {
-  constructor(indexP, fotoP, nombreP, precioP, cantidadP) {
-    this.index = indexP;
-    this.foto = fotoP;
-    this.nombre = nombreP;
-    this.precio = precioP;
-    this.cantidad = cantidadP;
-  }
-}
-
 
 function presentAlert() {
   const alert = document.createElement('ion-alert');
@@ -367,10 +353,66 @@ function comprarProducto() {
   navegar('page-tarjeta')
 }
 
+//---Carrito---//
+ 
+function cargarCarrito() {
+  let divCarrito = document.querySelector("#listado-carrito")
+  let html = ""
+  for (producto of carrito) {
+    html += /*html*/ `
+            <ion-card button>
+              <img src="${producto.foto}" />
+              <ion-card-header>
+              
+                <ion-card-title class="productoCarritoAmpliado">${producto.nombre}</ion-card-title>  
+                <ion-card-title class="productoCarritoAmpliado"> Precio: $  ${producto.precio}</ion-card-title>
+                  <ion-item>
+                <ion-button id="eliminarItem" fill="clear" onclick="eliminarItem(${producto.index})">
+                <ion-icon name="close-circle" size="large" color="danger"></ion-icon>
+                </ion-button>
+                  </ion-item>
+                <ion-card-title class="productoCarritoAmpliado"> Cantidad:  ${producto.cantidad}</ion-card-title>
+              </ion-card-header>
+            </ion-card>`
+  }
+  if (html === "") {
+    html = `<ion-card button>
+    <ion-card-header>
+    <img src="./assets/img/carrito-vacio.png"/>
+      <ion-card-title>Tu carrito se encuentra vacío!</ion-card-title>
+    </ion-card-header>
+  </ion-card>`
+  }
+  else {
+    html +=
+      `<ion-button class="comprarCarrito" onclick="comprarCarrito()" > Comprar </ion-button>`
+  }
+  divCarrito.innerHTML = html
+}
+
+function eliminarItem(index) {
+  carrito.splice(index, 1)
+  localStorage.setItem('carritoUsuario', JSON.stringify(carrito));
+  cargarCarrito()
+
+}
+
 function comprarCarrito() {
   comprandoCarrito = true
   navegar('page-tarjeta')
 }
+
+function cargarUsuario() {
+  let correo = document.querySelector("#correoDatosUsuario")
+  let idDatosUsuario = document.querySelector("#idDatosUsuario")
+  let contraseña = document.querySelector("#contraseñaDatosUsuario")
+
+  correo.innerHTML += localStorage.getItem("emailUsuario")
+  idDatosUsuario.innerHTML += localStorage.getItem("idUsuario")
+  contraseña.innerHTML += localStorage.getItem("contraseñaUsuario")
+}
+
+//---Método de pago---//
 
 function pagoElegido() {
   let finalizar = document.querySelector("#finalizarPago");
@@ -382,6 +424,7 @@ function pagoElegido() {
     datosDeTarjeta.style.display = "block"
     escanearCodigo.style.display = "none"
     finalizar.style.display = "block"
+    pagoMercadoPago=false
 
     document.querySelector("#titularTarjeta").addEventListener("ionBlur", validarTitularTarjeta)
     document.querySelector("#numeroTarjeta").addEventListener("ionBlur", validarNumeroTarjeta)
@@ -392,6 +435,7 @@ function pagoElegido() {
     datosDeTarjeta.style.display = "none"
     escanearCodigo.style.display = "block"
     finalizar.style.display = "block"
+    pagoMercadoPago = true
   }
 }
 
@@ -414,7 +458,7 @@ function validarTitularTarjeta() {
 
 }
 function validarNumeroTarjeta() {
-  numeroTarjetaValidado=false;
+  numeroTarjetaValidado = false;
   document.querySelector("#mensajePago").textContent = "";
   let numeroTarjeta = document.querySelector("#numeroTarjeta").value;
 
@@ -432,7 +476,7 @@ function validarNumeroTarjeta() {
 
 function validarCodigoTarjeta() {
   document.querySelector("#mensajePago").textContent = "";
-  codigoTarjetaValidado=false;
+  codigoTarjetaValidado = false;
   document.querySelector("#mensajePago").textContent = "";
   let codigoTarjeta = document.querySelector("#codigoTarjeta").value;
 
@@ -449,9 +493,7 @@ function validarCodigoTarjeta() {
 }
 
 function finalizarPago() {
-  
-
-  if(!titularTarjetaValidado || !numeroTarjetaValidado || !codigoTarjetaValidado){
+  if ((!titularTarjetaValidado || !numeroTarjetaValidado || !codigoTarjetaValidado) && !pagoMercadoPago) {
     alert("Faltan datos para poder realizar la compra")
     return
   }
@@ -465,51 +507,14 @@ function finalizarPago() {
 
 }
 
-//CARRITO
+//---Clases---//
 
-function cargarCarrito() {
-  let divCarrito = document.querySelector("#listado-carrito")
-  let html = ""
-  for (producto of carrito) {
-    html += /*html*/ `
-            <ion-card button>
-              <img src="${producto.foto}" />
-              <ion-card-header>
-              <ion-button color="danger" onclick="eliminarItem(${producto.index})"><ion-icon name="close-circle-outline"></ion-icon></ion-button>
-                <ion-card-title> $  ${producto.precio}</ion-card-title>
-                <ion-card-title>  ${producto.cantidad}</ion-card-title>
-                <ion-card-title>${producto.nombre}</ion-card-title>
-              </ion-card-header>
-            </ion-card>`
+class Producto {
+  constructor(indexP, fotoP, nombreP, precioP, cantidadP) {
+    this.index = indexP;
+    this.foto = fotoP;
+    this.nombre = nombreP;
+    this.precio = precioP;
+    this.cantidad = cantidadP;
   }
-  if (html === "") {
-    html = `<ion-card button>
-    <ion-card-header>
-    <img src="./assets/img/carrito-vacio.png"/>
-      <ion-card-title>Tu carrito se encuentra vacío!</ion-card-title>
-    </ion-card-header>
-  </ion-card>`
-  }
-  else {
-    html +=
-      `<ion-button onclick="comprarCarrito()" > Comprar </ion-button>`
-  }
-  divCarrito.innerHTML = html
-}
-
-function eliminarItem(index) {
-  carrito.splice(index, 1)
-  localStorage.setItem('carritoUsuario', JSON.stringify(carrito));
-  cargarCarrito()
-
-}
-
-function cargarUsuario(){ 
-  let correo = document.querySelector("#correoDatosUsuario")
-  let idDatosUsuario = document.querySelector("#idDatosUsuario")
-  let contraseña = document.querySelector("#contraseñaDatosUsuario")
-  
-  correo.innerHTML += localStorage.getItem("emailUsuario")
-  idDatosUsuario.innerHTML += localStorage.getItem("idUsuario")
-  contraseña.innerHTML += localStorage.getItem("contraseñaUsuario")
 }

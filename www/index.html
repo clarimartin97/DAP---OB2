@@ -20,7 +20,7 @@
 
     <ion-menu side="end" id="menusin" content-id="nav-principal" menu-id="menu-principal">
       <ion-header>
-        <ion-toolbar>
+        <ion-toolbar color="primary">
           <ion-title>Menu</ion-title>
         </ion-toolbar>
       </ion-header>
@@ -220,7 +220,9 @@
     <ion-content>
       <h1>Mi usuario</h1>
       <ion-img src="./assets/img/user.png" start></ion-img>
-      <ion-title>Datos personales</ion-title>
+      <ion-item>
+        <ion-title color="primary">Datos personales</ion-title>
+      </ion-item>
       <ion-item>
         <ion-label id="correoDatosUsuario">Correo electrónico: </ion-label>
       </ion-item>
@@ -230,6 +232,10 @@
 
       <ion-item>
         <ion-label id="contraseñaDatosUsuario">Contraseña: </ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-button slot="end" size="default" onclick="cerrarSesion()">Cerrar sesión </ion-button>
       </ion-item>
     </ion-content>
   </template>
@@ -336,10 +342,12 @@
       </ion-toolbar>
     </ion-header>
     <ion-content>
-      <ion-button onclick="nuevaNavegacion('page-listado')">Volver al listado</ion-button>
+      <ion-button id="volverAlListado" onclick="nuevaNavegacion('page-listado')">Volver al listado</ion-button>
       <ion-item>
         <h1>Tu compra fue realizada con éxito</h1>
+        
       </ion-item>
+      <ion-img src="./assets/img/pago-finalizado.jpg" start></ion-img>
     </ion-content>
   </template>
 

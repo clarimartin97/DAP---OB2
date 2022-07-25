@@ -21,22 +21,6 @@ customElements.define(
 );
 
 customElements.define(
-  "page-tarjeta",
-  class extends HTMLElement {
-    connectedCallback() {
-      this.innerHTML = document.getElementById("page-tarjeta.html").innerHTML;
-      document.querySelector("#completarDatosTarjeta").style.display = "none"
-      document.querySelector("#escanearCodigo").style.display = "none"
-      document.querySelector("#finalizarPago").style.display = "none"
-      
-      document.querySelector("#selPago").addEventListener("ionChange", pagoElegido)
-
-    }
-  }
-);
-
-
-customElements.define(
   "page-registro",
   class extends HTMLElement {
     connectedCallback() {
@@ -46,14 +30,21 @@ customElements.define(
   }
 );
 
+
 customElements.define(
-  "page-pago-finalizado",
+  "page-listado",
   class extends HTMLElement {
     connectedCallback() {
-      this.innerHTML = document.getElementById("page-pago-finalizado.html").innerHTML;
+      this.innerHTML = document.getElementById("page-listado.html").innerHTML;
+
+      const buscador = document.querySelector("#buscador");
+
+      buscador.addEventListener("search", handleInput)
+      cargarListadoProductos();
     }
   }
 );
+
 
 customElements.define(
   "skeleton-producto",
@@ -65,13 +56,16 @@ customElements.define(
     }
   }
 );
+
+
+
 customElements.define(
   "page-producto-ampliado",
   class extends HTMLElement {
     connectedCallback() {
       this.innerHTML =/*html*/`
   <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
@@ -87,21 +81,21 @@ customElements.define(
     <ion-card-header>
     <ion-row>
     <ion-col size="6">
-      <ion-card-title>${this.producto.title}</ion-card-title>
+      <ion-card-title class="productoAmpliado" >${this.producto.title}</ion-card-title>
       </ion-col>
       <ion-col size="6">
-      <ion-card-title> $ ${this.producto.price}</ion-card-title>
+      <ion-card-title id="precioProductoAmpliado" class="productoAmpliado"> $ ${this.producto.price}</ion-card-title>
       </ion-col>
       <ion-col size="6">
-      <ion-card-title>Disponibles a la venta: ${this.producto.available_quantity}</ion-card-title>
+      <ion-card-title class="productoAmpliado">Disponibles a la venta: ${this.producto.available_quantity}</ion-card-title>
       </ion-col>
       <ion-col size="6">
-      <ion-card-title>Cantidad vendida: ${this.producto.sold_quantity}</ion-card-title>
+      <ion-card-title class="productoAmpliado">Cantidad vendida: ${this.producto.sold_quantity}</ion-card-title>
       </ion-col>
       <ion-card-header>
-      <ion-card-title> ${this.producto.warranty}</ion-card-title> 
+      <ion-card-title class="productoAmpliado"> ${this.producto.warranty}</ion-card-title> 
       <ion-item>
-      <ion-label>Cantidad:</ion-label>
+      <ion-label class="productoAmpliado">Cantidad:</ion-label>
       <ion-input id="cantidadSeleccionada" value="1" min="1" max="${this.producto.available_quantity}" type="number"></ion-input>
     </ion-item>
     </ion-row>
@@ -119,6 +113,20 @@ customElements.define(
   }
 );
 
+customElements.define(
+  "page-tarjeta",
+  class extends HTMLElement {
+    connectedCallback() {
+      this.innerHTML = document.getElementById("page-tarjeta.html").innerHTML;
+      document.querySelector("#completarDatosTarjeta").style.display = "none"
+      document.querySelector("#escanearCodigo").style.display = "none"
+      document.querySelector("#finalizarPago").style.display = "none"
+      
+      document.querySelector("#selPago").addEventListener("ionChange", pagoElegido)
+
+    }
+  }
+);
 
 customElements.define(
   "page-usuario",
@@ -141,15 +149,10 @@ customElements.define(
 );
 
 customElements.define(
-  "page-listado",
+  "page-pago-finalizado",
   class extends HTMLElement {
     connectedCallback() {
-      this.innerHTML = document.getElementById("page-listado.html").innerHTML;
-
-      const buscador = document.querySelector("#buscador");
-
-      buscador.addEventListener("search", handleInput)
-      cargarListadoProductos();
+      this.innerHTML = document.getElementById("page-pago-finalizado.html").innerHTML;
     }
   }
 );
